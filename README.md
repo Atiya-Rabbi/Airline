@@ -1,6 +1,6 @@
 # Airline
 Requirement:
-Download MySQL
+Download Xampp
 Download Python
 Download mysql.connector
 
