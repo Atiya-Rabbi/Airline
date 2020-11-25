@@ -135,12 +135,12 @@ while True:
 			for table in tables:
 				print(table)
 			flight_id = int(input("Enter Flight ID: "))
-			query = """SELECT P.first, P.last, F.code FROM Passenger P INNER JOIN Flight F ON(F.flight_id = P.flight_id) WHERE P.flight_id = %s"""
+			query = """SELECT P.id, P.first, P.last, F.code FROM Passenger P INNER JOIN Flight F ON(F.flight_id = P.flight_id) WHERE P.flight_id = %s"""
 			query_vals = (flight_id,)
 			command_handler.execute(query,query_vals)
 			tables = command_handler.fetchall()
 			if len(tables) == 0:
-				print("No Passenger for Flight ID "+ flight_id)
+				print("No Passenger for Flight ID "+ str(flight_id))
 			else:
 				for table in tables:
 					print(table)
@@ -158,18 +158,20 @@ while True:
 					query_vals=(code,)
 					command_handler.execute(query,query_vals)
 					db1.commit()
+					print("Deleted successfully")
 				else:
 					print("Process Terminated")
 			#delete flight and associated passengers
 			elif pressed == 'b':
 				flight_id = int(input("Enter Flight Id: "))
-				print("NOTE: Deleting "+flight_id+" will also delete associated passengers")
+				print("NOTE: Deleting "+str(flight_id)+" will also delete associated passengers")
 				cont = input("Do you want to continue?y/n ")
 				if cont == 'y':
 					query="""DELETE FROM Flight WHERE flight_id = %s"""
-					query_vals=(code,)
+					query_vals=(flight_id,)
 					command_handler.execute(query,query_vals)
 					db1.commit()
+					print("Deleted successfully")
 				else:
 					print("Process Terminated")
 			#delete passenger
@@ -181,6 +183,7 @@ while True:
 					query_vals=(passenger_id,)
 					command_handler.execute(query,query_vals)
 					db1.commit()
+					print("Deleted successfully")
 				else:
 					print("Process Terminated")			
 			else:
@@ -192,4 +195,3 @@ while True:
 		break
 	else:
 		print("Incorrect Option")
-
